@@ -1,12 +1,18 @@
-package tests;
-
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.SearchContext;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.*;
+import static org.openqa.selenium.Keys.SPACE;
+
 public class PracticeFormTests {
 
     @BeforeAll
@@ -14,27 +20,39 @@ public class PracticeFormTests {
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.holdBrowserOpen = true;
+        Configuration.holdBrowserOpen = false;
         Configuration.timeout = 5000;
     }
     @Test
     void fillFormTests() {
 
-        open("/text-box");
-        $("#userName").setValue("Medina").pressEnter();
-        $("#userEmail").setValue("medina@gmail.com").pressEnter();
-        $("#currentAddress").setValue("Some street").pressEnter();
-        $("#permanentAddress").setValue("Some street_2").pressEnter();
-        $("#submit").click();
+        open("/automation-practice-form");
+        $("#firstName").setValue("Medina");
+        $("#lastName").setValue("Akhundova");
+        $("#userEmail").setValue("medina@gmail.com");
+        $("#genterWrapper").$(byText("Female")).click();
+        $("#userNumber").setValue("9967962177");
+        $("#dateOfBirthInput").click();
+        $("[id=dateOfBirthInput]").sendKeys(Keys.CONTROL + "A");
+        $("#dateOfBirthInput").sendKeys(SPACE);
+        $("#dateOfBirthInput").setValue("09 Jul 1992").pressEnter();
+        $("#subjectsInput").setValue("QA");
+        $("#hobbiesWrapper").$(byText("Music")).click();
+        $("#uploadPicture").uploadFromClasspath("foto.jpg");
+        $("#currentAddress").setValue("My address");
+        $("#react-select-3-input").setValue("NCR").pressEnter();
+        $("#react-select-4-input").setValue("Delhi").pressEnter();
+        $("#submit"). click();
 
 
-        $("#output #name").shouldHave(text("Medina")); //тип оформления
-        $("#output").$("#email").shouldHave(text("medina@gmail.com"));
-        $("#output").$("#currentAddress").shouldHave(text("Some street"));
-        $("#output").$("#permanentAddress").shouldHave(text("Some street_2"));
+            }
 
-
-
+    @AfterEach
+    public void closeDriver() {
+           closeWebDriver();
     }
 
+
+
 }
+
