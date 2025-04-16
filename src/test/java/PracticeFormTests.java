@@ -1,12 +1,9 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.SearchContext;
+
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
@@ -16,18 +13,19 @@ import static org.openqa.selenium.Keys.SPACE;
 public class PracticeFormTests {
 
     @BeforeAll
-    static void beforeAll(){
+    static void configureBrowser(){
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.holdBrowserOpen = false;
+
 
     }
     @Test
     void fillFormTests() {
 
         open("/automation-practice-form");
-
+        executeJavaScript("$('#fixedban').remove()");
+        executeJavaScript("$('footer').remove()");
         $("#firstName").setValue("Medina");
         $("#lastName").setValue("Akhundova");
         $("#userEmail").setValue("medina@gmail.com");
