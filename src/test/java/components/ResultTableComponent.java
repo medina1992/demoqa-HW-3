@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class ResultTableComponent {
 
         public final SelenideElement resultsTable =  $(".table-responsive");
-        public void checkResults(String key, String value){
+        public void checkResult(String key, String value){
             resultsTable.$(byText(key)).parent().shouldHave(text(value));
 
     }

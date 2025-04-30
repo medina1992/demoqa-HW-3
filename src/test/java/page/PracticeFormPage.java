@@ -1,8 +1,9 @@
 package page;
 
 import com.codeborne.selenide.SelenideElement;
+import components.CalendarComponent;
+import components.ResultTableComponent;
 import org.openqa.selenium.Keys;
-
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -12,6 +13,8 @@ public class PracticeFormPage {
     public PracticeFormPage() {
         open("/automation-practice-form");
     }
+    private final CalendarComponent calendar = new CalendarComponent();
+    private final ResultTableComponent resultTable = new ResultTableComponent();
 
     public final SelenideElement
             firstName = $("#firstName"),
@@ -63,20 +66,7 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage setBirthDate(String date) {
-
-        dateOfBirthInput.click();
-        for (int i = 0; i < 10; i++) {
-            dateOfBirthInput.sendKeys(Keys.BACK_SPACE);
-        }
-
-
-        dateOfBirthInput.sendKeys(date);
-
-
-        dateOfBirthInput.sendKeys(Keys.HOME);
-        dateOfBirthInput.sendKeys(Keys.DELETE);
-        dateOfBirthInput.sendKeys(Keys.ENTER);
-
+        calendar.setDate(date);
         return this;
     }
 
@@ -116,7 +106,7 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage verifyResult(String key, String value) {
-        resultsTable.$(byText(key)).parent().shouldHave(text(value));
+        resultTable.checkResult(key, value);
         return this;
     }
 
