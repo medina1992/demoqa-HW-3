@@ -1,9 +1,10 @@
 package page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 
-import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -23,10 +24,16 @@ public class PracticeFormPage {
             cityInput = $("#react-select-4-input"),
             submitButton = $("#submit"),
             resultsTable = $(".table-responsive"),
-            closeModal = $("#closeLargeModal");
+            closeModal = $("#closeLargeModal"),
+            modalContent = $(".modal-content");
+
 
     public PracticeFormPage openPage() {
         open("/automation-practice-form");
+        return this;
+    }
+
+    public PracticeFormPage removeBanners() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
         return this;
@@ -119,8 +126,12 @@ public class PracticeFormPage {
         closeModal.click();
     }
 
-    public void name() {
+    public void assertModalIsNotVisible() {
+
+        modalContent.shouldNotBe(visible);
     }
+
+
 }
 
 

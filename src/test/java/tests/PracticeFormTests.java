@@ -10,8 +10,6 @@ import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class PracticeFormTests {
 
-    PracticeFormPage formPage = new PracticeFormPage();
-
     @BeforeAll
     static void setup() {
         Configuration.browserSize = "1920x1080";
@@ -19,9 +17,13 @@ public class PracticeFormTests {
         Configuration.pageLoadStrategy = "eager";
     }
 
+    PracticeFormPage formPage = new PracticeFormPage();
+    // позитивный тестовый сценарий E2E
+
     @Test
-    void fillFormTest() throws InterruptedException {
+    void fillFormTest() {
         formPage.openPage()
+                .removeBanners()
                 .setFirstName("Medina")
                 .setLastName("Akhundova")
                 .setEmail("medina@gmail.com")
@@ -48,6 +50,37 @@ public class PracticeFormTests {
 
         formPage.closeModal();
     }
+
+    //негативный тестовый сценарий (не заполняем обязательные поля)
+    @Test
+    void negativeFormTest_MissingRequiredFields() {
+        formPage.openPage()
+                .removeBanners()
+                .setLastName("Akhundova")
+                .setEmail("medina@gmail.com")
+                .selectGender("Female")
+                .submitForm();
+
+        formPage.assertModalIsNotVisible();
+    }
+
+    //позитивная проверка по минилаьным количествам вводимых обязательных параметров
+    @Test
+    void formShouldBeSubmittedWithMinimalRequiredFields() {
+        formPage.openPage()
+                .removeBanners()
+                .setFirstName("Medina")
+                .setLastName("Akhundova")
+                .selectGender("Female")
+                .setPhone("9967962177")
+                .submitForm()
+                .verifyResult("Student Name", "Medina Akhundova")
+                .verifyResult("Gender", "Female")
+                .verifyResult("Mobile", "9967962177");
+
+        formPage.closeModal();
+    }
+
 
     @AfterEach
     public void tearDown() {
