@@ -1,21 +1,9 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import page.PracticeFormPage;
 
-import static com.codeborne.selenide.Selenide.closeWebDriver;
-
-public class PracticeFormTests {
-
-    @BeforeAll
-    static void setup() {
-        Configuration.browserSize = "1920x1080";
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.pageLoadStrategy = "eager";
-    }
+public class PracticeFormTests extends BaseTest{
 
     PracticeFormPage formPage = new PracticeFormPage();
     // позитивный тестовый сценарий E2E
@@ -76,11 +64,5 @@ public class PracticeFormTests {
                 .verifyResult("Mobile", "9967962177");
 
         formPage.closeModal();
-    }
-
-
-    @AfterEach
-    public void tearDown() {
-        closeWebDriver();
     }
 }
