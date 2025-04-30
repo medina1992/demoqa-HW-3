@@ -1,6 +1,5 @@
 package page;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
 
@@ -9,6 +8,11 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormPage {
+
+    public PracticeFormPage() {
+        open("/automation-practice-form");
+    }
+
     public final SelenideElement
             firstName = $("#firstName"),
             lastName = $("#lastName"),
@@ -26,12 +30,6 @@ public class PracticeFormPage {
             resultsTable = $(".table-responsive"),
             closeModal = $("#closeLargeModal"),
             modalContent = $(".modal-content");
-
-
-    public PracticeFormPage openPage() {
-        open("/automation-practice-form");
-        return this;
-    }
 
     public PracticeFormPage removeBanners() {
         executeJavaScript("$('#fixedban').remove()");

@@ -22,8 +22,7 @@ public class PracticeFormTests {
 
     @Test
     void fillFormTest() {
-        formPage.openPage()
-                .removeBanners()
+        formPage.removeBanners()
                 .setFirstName("Medina")
                 .setLastName("Akhundova")
                 .setEmail("medina@gmail.com")
@@ -54,8 +53,7 @@ public class PracticeFormTests {
     //негативный тестовый сценарий (не заполняем обязательные поля)
     @Test
     void negativeFormTest_MissingRequiredFields() {
-        formPage.openPage()
-                .removeBanners()
+        formPage.removeBanners()
                 .setLastName("Akhundova")
                 .setEmail("medina@gmail.com")
                 .selectGender("Female")
@@ -67,8 +65,7 @@ public class PracticeFormTests {
     //позитивная проверка по минилаьным количествам вводимых обязательных параметров
     @Test
     void formShouldBeSubmittedWithMinimalRequiredFields() {
-        formPage.openPage()
-                .removeBanners()
+        formPage.removeBanners()
                 .setFirstName("Medina")
                 .setLastName("Akhundova")
                 .selectGender("Female")
