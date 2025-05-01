@@ -6,12 +6,14 @@ repositories {
 }
 
 dependencies {
-    testImplementation (
+    testImplementation(
             "org.junit.jupiter:junit-jupiter:5.10.0",
             "com.codeborne:selenide:7.8.1",
-            "org.slf4j:slf4j-simple:2.0.7"
+            "org.slf4j:slf4j-simple:2.0.7",
+            'com.github.javafaker:javafaker:1.0.2'
     )
 }
-test{
+test {
     useJUnitPlatform()
 }
+
