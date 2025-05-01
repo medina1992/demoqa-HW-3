@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.$;
 public class CalendarComponent {
     private final SelenideElement dateOfBirthInput = $("#dateOfBirthInput");
 
-    public void setDate(String date) {
+    public <String> void setDate(String date) {
         dateOfBirthInput.click();
 
         // Очистка поля через BACK_SPACE
@@ -16,11 +16,10 @@ public class CalendarComponent {
             dateOfBirthInput.sendKeys(Keys.BACK_SPACE);
         }
 
-        dateOfBirthInput.sendKeys(date);
+        dateOfBirthInput.sendKeys((CharSequence) date);
         dateOfBirthInput.sendKeys(Keys.HOME, Keys.DELETE, Keys.ENTER);
     }
+
+    public void setDate(String day, String month, String year) {
+    }
 }
-
-
-
-

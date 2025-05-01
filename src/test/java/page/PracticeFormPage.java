@@ -1,7 +1,9 @@
 package page;
 
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.Keys;
+import components.CalendarComponent;
+import components.ResultTableComponent;
+import data.BirthDate;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -12,6 +14,8 @@ public class PracticeFormPage {
     public PracticeFormPage() {
         open("/automation-practice-form");
     }
+    private final CalendarComponent calendar = new CalendarComponent();
+    private final ResultTableComponent resultTable = new ResultTableComponent();
 
     public final SelenideElement
             firstName = $("#firstName"),
@@ -62,23 +66,11 @@ public class PracticeFormPage {
         return this;
     }
 
-    public PracticeFormPage setBirthDate(String date) {
-
-        dateOfBirthInput.click();
-        for (int i = 0; i < 10; i++) {
-            dateOfBirthInput.sendKeys(Keys.BACK_SPACE);
-        }
-
-
-        dateOfBirthInput.sendKeys(date);
-
-
-        dateOfBirthInput.sendKeys(Keys.HOME);
-        dateOfBirthInput.sendKeys(Keys.DELETE);
-        dateOfBirthInput.sendKeys(Keys.ENTER);
-
-        return this;
+    public PracticeFormPage setBirthDate(BirthDate birthDate) {
+        calendar.setDate(birthDate.day(), birthDate.month(), birthDate.year()); // Передаем поля из объекта birthDate
+        return this; // Возвращаем объект страницы для продолжения цепочки
     }
+
 
     public PracticeFormPage setSubject(String subject) {
         subjectsInput.setValue(subject).pressEnter();
@@ -116,7 +108,7 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage verifyResult(String key, String value) {
-        resultsTable.$(byText(key)).parent().shouldHave(text(value));
+        resultTable.checkResult(key, value);
         return this;
     }
 
