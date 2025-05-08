@@ -1,69 +1,53 @@
 package tests;
 
+import com.github.javafaker.Faker;
 import components.CalendarComponent;
-import data.BirthDate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import page.PracticeFormPage;
-import org.junit.jupiter.api.BeforeEach;
-import com.github.javafaker.Faker;
-
-
 
 public class PracticeFormTests extends BaseTest {
+    private final CalendarComponent calendar = new CalendarComponent();
+    private final PracticeFormPage formPage = new PracticeFormPage();
+    private final TestData data = new TestData();
     private Faker faker;
-    PracticeFormPage formPage = new PracticeFormPage();
 
     @BeforeEach
     public void setUp() {
         faker = new Faker();
     }
 
-    public PracticeFormTests setBirthDate(String day, String month, String year) {
-        calendar.setDate(day, month, year);
-        return this;
-    }
-
-
-    private final CalendarComponent calendar = new CalendarComponent();
-
-    TestData data = new TestData();
-    // Позитивный тестовый сценарий E2E
     @Test
     void fillFormTest() {
-
-        BirthDate birthDate = new BirthDate("09", "July", "1992"); // Создание объекта TestData
-
         formPage.removeBanners()
-                .setFirstName(data.firstName)  // Используем данные из TestData
+                .setFirstName(data.firstName)
                 .setLastName(data.lastName)
                 .setEmail(data.email)
-                .selectGender(data.gender)  // Нет необходимости в toString(), так как это уже строка
+                .selectGender(data.gender)
                 .setPhone(data.phone)
-                .setBirthDate(birthDate)  // Доступ к данным о дате
-                .setSubject(data.subject)  // Нет необходимости в toString()
-                .selectHobby(data.hobby)  // Нет необходимости в toString()
+                .setBirthDate(data.birthDate)
+                .setSubject(data.subject)
+                .selectHobby(data.hobby)
                 .uploadFile(data.picture)
                 .setAddress(data.address)
-                .selectState(data.state)  // Нет необходимости в toString()
-                .selectCity(data.city)  // Нет необходимости в toString()
+                .selectState(data.state)
+                .selectCity(data.city)
                 .submitForm()
                 .verifyResult("Student Name", data.firstName + " " + data.lastName)
                 .verifyResult("Student Email", data.email)
-                .verifyResult("Gender", data.gender)  // Проверка по строковому значению
+                .verifyResult("Gender", data.gender)
                 .verifyResult("Mobile", data.phone)
-                .verifyResult("Date of Birth", data.birthDate.getFormattedForCheck())  // Форматированная дата
-                .verifyResult("Subjects", data.subject)  // Проверка по строковому значению
-                .verifyResult("Hobbies", data.hobby)  // Проверка по строковому значению
+                .verifyResult("Date of Birth", data.birthDate.getFormattedForCheck())
+                .verifyResult("Subjects", data.subject)
+                .verifyResult("Hobbies", data.hobby)
                 .verifyResult("Picture", data.picture)
                 .verifyResult("Address", data.address)
-                .verifyResult("State and City", data.state + " " + data.city);
+                .verifyResult("State and City", data.stateAndCity);
 
         formPage.closeModal();
     }
 
-    // Негативный тестовый сценарий (не заполняем обязательные поля)
     @Test
-
     void negativeFormTest_MissingRequiredFields() {
         String lastName = faker.name().lastName();
         String email = faker.internet().emailAddress();
@@ -77,13 +61,11 @@ public class PracticeFormTests extends BaseTest {
         formPage.assertModalIsNotVisible();
     }
 
-    // Позитивная проверка минимальных обязательных параметров
     @Test
-
     void formShouldBeSubmittedWithMinimalRequiredFields() {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
-        String phone = faker.phoneNumber().phoneNumber();
+        String phone = faker.phoneNumber().subscriberNumber(10);
 
         formPage.removeBanners()
                 .setFirstName(firstName)
@@ -91,10 +73,11 @@ public class PracticeFormTests extends BaseTest {
                 .selectGender(data.gender)
                 .setPhone(phone)
                 .submitForm()
-                .verifyResult("Student Name", data.firstName + " " + data.lastName)
+                .verifyResult("Student Name", firstName + " " + lastName)
                 .verifyResult("Gender", data.gender)
-                .verifyResult("Mobile", data.phone);
+                .verifyResult("Mobile", phone);
 
         formPage.closeModal();
     }
+
 }

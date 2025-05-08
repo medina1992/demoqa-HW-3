@@ -67,8 +67,9 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage setBirthDate(BirthDate birthDate) {
-        calendar.setDate(birthDate.day(), birthDate.month(), birthDate.year()); // Передаем поля из объекта birthDate
-        return this; // Возвращаем объект страницы для продолжения цепочки
+        $("#dateOfBirthInput").click();
+        calendar.setDate(birthDate.day(), birthDate.month(), birthDate.year());
+        return this;
     }
 
 
@@ -77,15 +78,17 @@ public class PracticeFormPage {
         return this;
     }
 
+    public PracticeFormPage uploadFile(String fileName) {
+        uploadPicture.uploadFromClasspath(fileName);
+        return this;
+    }
+
     public PracticeFormPage selectHobby(String hobby) {
         hobbiesWrapper.$(byText(hobby)).click();
         return this;
     }
 
-    public PracticeFormPage uploadFile(String fileName) {
-        uploadPicture.uploadFromClasspath(fileName);
-        return this;
-    }
+
 
     public PracticeFormPage setAddress(String address) {
         currentAddress.setValue(address);
@@ -120,6 +123,7 @@ public class PracticeFormPage {
 
         modalContent.shouldNotBe(visible);
     }
+
 
 
 }
