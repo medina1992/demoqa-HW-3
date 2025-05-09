@@ -41,13 +41,10 @@ public class PracticeFormTests extends BaseTest {
 
     @Test
     void negativeFormTest_MissingRequiredFields() {
-        String lastName = faker.name().lastName();
-        String email = faker.internet().emailAddress();
-
 
         formPage.removeBanners()
-                .setLastName(lastName)
-                .setEmail(email)
+                .setLastName(data.lastName)
+                .setEmail(data.email)
                 .selectGender(data.gender)
                 .submitForm();
 
@@ -56,20 +53,16 @@ public class PracticeFormTests extends BaseTest {
 
     @Test
     void formShouldBeSubmittedWithMinimalRequiredFields() {
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String phone = faker.phoneNumber().subscriberNumber(10);
-
 
         formPage.removeBanners()
-                .setFirstName(firstName)
-                .setLastName(lastName)
+                .setFirstName(data.firstName)
+                .setLastName(data.lastName)
                 .selectGender(data.gender)
-                .setPhone(phone)
+                .setPhone(data.phone)
                 .submitForm()
-                .verifyResult("Student Name", firstName + " " + lastName)
+                .verifyResult("Student Name", data.firstName + " " + data.lastName)
                 .verifyResult("Gender", data.gender)
-                .verifyResult("Mobile", phone);
+                .verifyResult("Mobile", data.phone);
 
         formPage.closeModal();
     }
