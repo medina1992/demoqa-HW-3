@@ -1,10 +1,10 @@
 package tests;
 
 import com.github.javafaker.Faker;
-import data.BirthDate;
+
 
 public class TestData {
-    private static final Faker faker = new Faker();
+    static final Faker faker = new Faker();
 
     public final String firstName = faker.name().firstName();
     public final String lastName = faker.name().lastName();
@@ -19,7 +19,7 @@ public class TestData {
             "July", "August", "September", "October", "November", "December"
     );
     public final String year = String.valueOf(faker.number().numberBetween(1990, 2023));
-    public final BirthDate birthDate = new BirthDate(day, month, year);
+
 
     public final String subject = faker.options().option("Maths", "Physics", "Chemistry", "Biology", "English");
     public final String hobby = faker.options().option("Music", "Reading", "Sports");

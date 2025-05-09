@@ -1,21 +1,12 @@
 package tests;
 
-import com.github.javafaker.Faker;
-import components.CalendarComponent;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import page.PracticeFormPage;
+import static tests.TestData.faker;
 
 public class PracticeFormTests extends BaseTest {
-    private final CalendarComponent calendar = new CalendarComponent();
     private final PracticeFormPage formPage = new PracticeFormPage();
     private final TestData data = new TestData();
-    private Faker faker;
-
-    @BeforeEach
-    public void setUp() {
-        faker = new Faker();
-    }
 
     @Test
     void fillFormTest() {
@@ -25,7 +16,7 @@ public class PracticeFormTests extends BaseTest {
                 .setEmail(data.email)
                 .selectGender(data.gender)
                 .setPhone(data.phone)
-                .setBirthDate(data.birthDate)
+                .setBirthDate(data.day, data.month, data.year)
                 .setSubject(data.subject)
                 .selectHobby(data.hobby)
                 .uploadFile(data.picture)
@@ -37,7 +28,7 @@ public class PracticeFormTests extends BaseTest {
                 .verifyResult("Student Email", data.email)
                 .verifyResult("Gender", data.gender)
                 .verifyResult("Mobile", data.phone)
-                .verifyResult("Date of Birth", data.birthDate.getFormattedForCheck())
+                .verifyResult("Date of Birth", data.day + " " + data.month + "," + data.year)
                 .verifyResult("Subjects", data.subject)
                 .verifyResult("Hobbies", data.hobby)
                 .verifyResult("Picture", data.picture)
@@ -47,10 +38,12 @@ public class PracticeFormTests extends BaseTest {
         formPage.closeModal();
     }
 
+
     @Test
     void negativeFormTest_MissingRequiredFields() {
         String lastName = faker.name().lastName();
         String email = faker.internet().emailAddress();
+
 
         formPage.removeBanners()
                 .setLastName(lastName)
@@ -66,6 +59,7 @@ public class PracticeFormTests extends BaseTest {
         String firstName = faker.name().firstName();
         String lastName = faker.name().lastName();
         String phone = faker.phoneNumber().subscriberNumber(10);
+
 
         formPage.removeBanners()
                 .setFirstName(firstName)

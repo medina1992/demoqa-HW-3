@@ -3,7 +3,6 @@ package page;
 import com.codeborne.selenide.SelenideElement;
 import components.CalendarComponent;
 import components.ResultTableComponent;
-import data.BirthDate;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
@@ -23,7 +22,6 @@ public class PracticeFormPage {
             userEmail = $("#userEmail"),
             genderWrapper = $("#genterWrapper"),
             userNumber = $("#userNumber"),
-            dateOfBirthInput = $("#dateOfBirthInput"),
             subjectsInput = $("#subjectsInput"),
             hobbiesWrapper = $("#hobbiesWrapper"),
             uploadPicture = $("#uploadPicture"),
@@ -31,7 +29,6 @@ public class PracticeFormPage {
             stateInput = $("#react-select-3-input"),
             cityInput = $("#react-select-4-input"),
             submitButton = $("#submit"),
-            resultsTable = $(".table-responsive"),
             closeModal = $("#closeLargeModal"),
             modalContent = $(".modal-content");
 
@@ -66,9 +63,9 @@ public class PracticeFormPage {
         return this;
     }
 
-    public PracticeFormPage setBirthDate(BirthDate birthDate) {
+    public PracticeFormPage setBirthDate(String day, String month, String year) {
         $("#dateOfBirthInput").click();
-        calendar.setDate(birthDate.day(), birthDate.month(), birthDate.year());
+        calendar.setDate(day, month, year);
         return this;
     }
 
@@ -87,8 +84,6 @@ public class PracticeFormPage {
         hobbiesWrapper.$(byText(hobby)).click();
         return this;
     }
-
-
 
     public PracticeFormPage setAddress(String address) {
         currentAddress.setValue(address);

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeAll;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class BaseTest {
-    protected static Faker faker;
 
     @BeforeAll
     static void setup() {
