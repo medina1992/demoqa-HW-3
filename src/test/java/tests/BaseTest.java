@@ -16,6 +16,7 @@ public class BaseTest {
 
     @BeforeAll
     static void setup() {
+        Configuration.remote = "http://selenoid.autotests.cloud:8080/wd/hub";
         Configuration.browser = "chrome";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
