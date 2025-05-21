@@ -1,16 +1,23 @@
 package tests;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import page.PracticeFormPage;
 import static tests.TestData.faker;
 
 public class PracticeFormTests extends BaseTest {
-    private final PracticeFormPage formPage = new PracticeFormPage();
+    private PracticeFormPage formPage;
     private final TestData data = new TestData();
+
+    @BeforeEach
+    void setUpTest() {
+        formPage = new PracticeFormPage();
+    }
 
     @Test
     void fillFormTest() {
         formPage.removeBanners()
+                .openPage()
                 .setFirstName(data.firstName)
                 .setLastName(data.lastName)
                 .setEmail(data.email)
@@ -43,6 +50,7 @@ public class PracticeFormTests extends BaseTest {
     void negativeFormTest_MissingRequiredFields() {
 
         formPage.removeBanners()
+                .openPage()
                 .setLastName(data.lastName)
                 .setEmail(data.email)
                 .selectGender(data.gender)
@@ -55,6 +63,7 @@ public class PracticeFormTests extends BaseTest {
     void formShouldBeSubmittedWithMinimalRequiredFields() {
 
         formPage.removeBanners()
+                .openPage()
                 .setFirstName(data.firstName)
                 .setLastName(data.lastName)
                 .selectGender(data.gender)

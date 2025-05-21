@@ -15,6 +15,10 @@ public class PracticeFormPage {
     }
     private final CalendarComponent calendar = new CalendarComponent();
     private final ResultTableComponent resultTable = new ResultTableComponent();
+    public PracticeFormPage openPage() {
+        open("/automation-practice-form");
+        return this;
+    }
 
     public final SelenideElement
             firstName = $("#firstName"),

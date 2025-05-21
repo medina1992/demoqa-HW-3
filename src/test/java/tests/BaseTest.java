@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import page.PracticeFormPage;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
@@ -19,7 +20,6 @@ public class BaseTest {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.browserVersion = "128.0";
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
@@ -33,6 +33,7 @@ public class BaseTest {
         AllureAttachments.pageSource();
         AllureAttachments.browserConsoleLogs();
         AllureAttachments.browserConsoleLogs();
+
 
             try {
                 RemoteWebDriver driver = (RemoteWebDriver) WebDriverRunner.getWebDriver();
