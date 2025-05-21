@@ -10,6 +10,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import page.PracticeFormPage;
 
+import java.util.Map;
+
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class BaseTest {
@@ -22,8 +24,10 @@ public class BaseTest {
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("enableVNC", true);
-        capabilities.setCapability("enableVideo", true);
+        capabilities.setCapability("selenoid:options", Map.of(
+                "enableVNC", true,
+                "enableVideo", true
+        ));
         Configuration.browserCapabilities = capabilities;
 
     }
