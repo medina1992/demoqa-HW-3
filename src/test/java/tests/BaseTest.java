@@ -6,6 +6,7 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,7 +17,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 
 public class BaseTest {
@@ -24,7 +28,7 @@ public class BaseTest {
 
 
         @BeforeAll
-        static void setup() {
+        static void setup() throws IOException {
             Configuration.remote = "http://selenoid.autotests.cloud:8080/wd/hub";
             Configuration.baseUrl = "https://demoqa.com";
             Configuration.browserSize = "1920x1080";
@@ -35,6 +39,9 @@ public class BaseTest {
                     "--disable-dev-shm-usage",
                     "--no-sandbox"
             );
+
+            Path userDataDir = Files.createTempDirectory("chrome-user-data");
+            options.addArguments("--user-data-dir=" + userDataDir.toAbsolutePath());
 
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
