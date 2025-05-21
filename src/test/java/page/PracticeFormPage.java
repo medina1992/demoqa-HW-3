@@ -37,7 +37,6 @@ public class PracticeFormPage {
     public PracticeFormPage removeBanners() {
         executeJavaScript("document.getElementById('fixedban')?.remove()");
         executeJavaScript("document.querySelector('footer')?.remove()");
-        // Удаляем iframe рекламы, если он есть
         executeJavaScript("let adIframe = document.querySelector('iframe[id^=\"google_ads_iframe_\"]'); if(adIframe) adIframe.remove();");
         return this;
     }
@@ -104,7 +103,10 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage submitForm() {
-        submitButton.shouldBe(enabled, visible).click();
+        removeBanners();  // удаляем рекламу
+
+        $("#submit").scrollTo().click(); // скроллим и кликаем
+
         return this;
     }
 
