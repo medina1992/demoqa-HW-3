@@ -20,21 +20,12 @@ public class BaseTest {
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
 
-        // Если используешь Selenoid
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-notifications");
-        options.addArguments("--window-size=1920,1080");
-
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
-
         Configuration.browserCapabilities = capabilities;
+
     }
 
     @AfterEach
@@ -42,20 +33,15 @@ public class BaseTest {
         AllureAttachments.screenshotAs("Last screenshot");
         AllureAttachments.pageSource();
         AllureAttachments.browserConsoleLogs();
+        AllureAttachments.browserConsoleLogs();
 
-        // Если сессия — удалённая, добавляем видео
-        try {
-            RemoteWebDriver driver = (RemoteWebDriver) WebDriverRunner.getWebDriver();
-            String sessionId = driver.getSessionId().toString();
-            AllureAttachments.attachVideo(sessionId);
-        } catch (Exception e) {
-            System.out.println("Video attachment skipped: " + e.getMessage());
-        }
-        try {
-            Thread.sleep(1000); // Пауза перед закрытием браузера
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            try {
+                RemoteWebDriver driver = (RemoteWebDriver) WebDriverRunner.getWebDriver();
+                String sessionId = driver.getSessionId().toString();
+                AllureAttachments.attachVideo(sessionId);
+            } catch (Exception e) {
+                System.out.println("Video attachment skipped: " + e.getMessage());
+            }
 
         closeWebDriver(); // закрываем браузер
     }
