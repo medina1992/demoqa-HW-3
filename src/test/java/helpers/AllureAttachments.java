@@ -37,7 +37,7 @@ public class AllureAttachments {
     }
 
 
-    // Главное: добавление видео из Selenoid
+
     public static void attachVideo(String sessionId) {
         String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId + ".mp4";
         try {

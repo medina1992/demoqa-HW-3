@@ -1,6 +1,7 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.AfterEach;
@@ -71,6 +72,7 @@ public class BaseTest {
             } catch (Exception e) {
                 System.out.println("Видео не прикреплено: " + e.getMessage());
             }
+            Selenide.closeWebDriver();
         }
     }
 
