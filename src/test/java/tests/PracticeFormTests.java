@@ -18,8 +18,8 @@ public class PracticeFormTests extends BaseTest {
 
     @Test
     void fillFormTest() {
-        formPage.removeBanners()
-                .openPage()
+        formPage.openPage()
+                .removeBanners()
                 .setFirstName(data.firstName)
                 .setLastName(data.lastName)
                 .setEmail(data.email)
@@ -51,8 +51,8 @@ public class PracticeFormTests extends BaseTest {
     @Test
     void negativeFormTest_MissingRequiredFields() {
 
-        formPage.removeBanners()
-                .openPage()
+        formPage.openPage()
+                .removeBanners()
                 .setLastName(data.lastName)
                 .setEmail(data.email)
                 .selectGender(data.gender)
@@ -64,8 +64,8 @@ public class PracticeFormTests extends BaseTest {
     @Test
     void formShouldBeSubmittedWithMinimalRequiredFields() {
 
-        formPage.removeBanners()
-                .openPage()
+        formPage.openPage()
+                .removeBanners()
                 .setFirstName(data.firstName)
                 .setLastName(data.lastName)
                 .selectGender(data.gender)
