@@ -10,15 +10,8 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormPage {
 
-    public PracticeFormPage() {
-        open("/automation-practice-form");
-    }
     private final CalendarComponent calendar = new CalendarComponent();
     private final ResultTableComponent resultTable = new ResultTableComponent();
-    public PracticeFormPage openPage() {
-        open("/automation-practice-form");
-        return this;
-    }
 
     public final SelenideElement
             firstName = $("#firstName"),
@@ -36,9 +29,14 @@ public class PracticeFormPage {
             closeModal = $("#closeLargeModal"),
             modalContent = $(".modal-content");
 
+    public PracticeFormPage openPage() {
+        open("/automation-practice-form");
+        return this;
+    }
+
     public PracticeFormPage removeBanners() {
-        executeJavaScript("$('#fixedban').remove()");
-        executeJavaScript("$('footer').remove()");
+        executeJavaScript("document.getElementById('fixedban')?.remove()");
+        executeJavaScript("document.querySelector('footer')?.remove()");
         return this;
     }
 
@@ -73,7 +71,6 @@ public class PracticeFormPage {
         return this;
     }
 
-
     public PracticeFormPage setSubject(String subject) {
         subjectsInput.setValue(subject).pressEnter();
         return this;
@@ -105,7 +102,7 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage submitForm() {
-        submitButton.click();
+        submitButton.shouldBe(enabled, visible).click();
         return this;
     }
 
@@ -119,13 +116,6 @@ public class PracticeFormPage {
     }
 
     public void assertModalIsNotVisible() {
-
         modalContent.shouldNotBe(visible);
     }
-
-
-
 }
-
-
-
