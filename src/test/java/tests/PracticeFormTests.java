@@ -1,5 +1,6 @@
 package tests;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import page.PracticeFormPage;
@@ -11,6 +12,7 @@ public class PracticeFormTests extends BaseTest {
 
     @BeforeEach
     void setUpTest() {
+
         formPage = new PracticeFormPage();
     }
 
