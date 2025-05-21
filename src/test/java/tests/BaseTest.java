@@ -66,7 +66,9 @@ public class BaseTest {
 
             // Видео из Selenoid
             try {
+
                 String sessionId = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getSessionId().toString();
+                System.out.println("SessionId: " + sessionId);
                 String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId + ".mp4";
                 Allure.addAttachment("Video", "video/mp4", new URL(videoUrl).openStream(), "mp4");
             } catch (Exception e) {
