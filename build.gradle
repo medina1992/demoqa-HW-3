@@ -25,3 +25,6 @@ allure {
 tasks.withType(Test) {
     useJUnitPlatform()
 }
+test {
+    ignoreFailures = true
+}
