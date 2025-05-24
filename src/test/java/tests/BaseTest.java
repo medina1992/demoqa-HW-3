@@ -34,13 +34,6 @@ public class BaseTest {
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
 
-
-
-//        Configuration.remote = "http://selenoid.autotests.cloud:8080/wd/hub";
-//        Configuration.baseUrl = "https://demoqa.com";
-//        Configuration.browserSize = "1920x1080";
-//        Configuration.pageLoadStrategy = "eager";
-
         ChromeOptions options = new ChromeOptions();
         options.addArguments(
                 "--disable-dev-shm-usage",
