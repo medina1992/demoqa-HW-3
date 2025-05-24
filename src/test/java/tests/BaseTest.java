@@ -27,10 +27,19 @@ public class BaseTest {
 
     @BeforeAll
     static void setup() throws IOException {
-        Configuration.remote = "http://selenoid.autotests.cloud:8080/wd/hub";
+        Configuration.remote = System.getProperty("remoteUrl", "http://localhost:4444/wd/hub");
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserVersion = System.getProperty("browserVersion", "127.0");
+        Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
         Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
+
+
+
+//        Configuration.remote = "http://selenoid.autotests.cloud:8080/wd/hub";
+//        Configuration.baseUrl = "https://demoqa.com";
+//        Configuration.browserSize = "1920x1080";
+//        Configuration.pageLoadStrategy = "eager";
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments(
