@@ -27,7 +27,7 @@ public class BaseTest {
 
     @BeforeAll
     static void setup() throws IOException {
-        Configuration.remote = System.getProperty("remoteUrl", "selenide.remote=http://selenoid.autotests.cloud:4444/wd/hub");
+        Configuration.remote = System.getProperty("remoteUrl", "http://selenoid.autotests.cloud:4444/wd/hub");
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("browserVersion", "127.0");
         Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
