@@ -1,47 +1,75 @@
 package helpers;
 
-import com.codeborne.selenide.WebDriverRunner;
-import io.qameta.allure.Allure;
+import com.codeborne.selenide.Selenide;
+import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.logging.LogEntries;
-import org.openqa.selenium.logging.LogEntry;
-import org.openqa.selenium.logging.LogType;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.net.URL;
+import org.openqa.selenium.TakesScreenshot;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
+import static com.codeborne.selenide.Selenide.sessionId;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static org.openqa.selenium.logging.LogType.BROWSER;
 
 public class AllureAttachments {
-
-    public static void screenshotAs(String name) {
-        byte[] screenshot = com.codeborne.selenide.Selenide.screenshot(OutputType.BYTES);
-        Allure.addAttachment(name, new ByteArrayInputStream(screenshot));
+    @Attachment(value = "{attachName}", type = "image/png")
+    public static byte[] screenshotAs(String attachName) {
+        try {
+            byte[] result = ((TakesScreenshot) getWebDriver()).getScreenshotAs(OutputType.BYTES);
+            return result;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return new byte[0];
     }
 
-    public static void pageSource() {
-        String source = WebDriverRunner.source();
-        Allure.addAttachment("Page source", "text/html", source, ".html");
+    @Attachment(value = "Page source", type = "text/plain")
+    public static byte[] pageSource() {
+        try {
+            byte[] result = getWebDriver().getPageSource().getBytes(StandardCharsets.UTF_8);
+            return result;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
+
+    @Attachment(value = "{attachName}", type = "text/plain")
+    public static String attachAsText(String attachName, String message) {
+        return message;
     }
 
     public static void browserConsoleLogs() {
-        WebDriver driver = WebDriverRunner.getWebDriver();
-        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-        StringBuilder logs = new StringBuilder();
-        for (LogEntry entry : logEntries) {
-            logs.append(entry.getLevel()).append(" ").append(entry.getMessage()).append("\n");
+        try {
+            attachAsText(
+                    "Browser console logs",
+                    String.join("\n", Selenide.getWebDriverLogs(BROWSER))
+            );
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        Allure.addAttachment("Browser console logs", logs.toString());
     }
 
+    @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
+    public static String addVideo() {
+        return "<html><body><video width='100%' height='100%' controls autoplay><source src='"
+                + getVideoUrl()
+                + "' type='video/mp4'></video></body></html>";
+    }
 
-
-    public static void attachVideo(String sessionId) {
-        String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId + ".mp4";
+    public static URL getVideoUrl() {
+        String videoUrl = "https://selenoid.autotests.cloud/video/" + sessionId() + ".mp4";
+        //  System.out.println(sessionId());
         try {
-            Allure.addAttachment("Video", "video/mp4", new URL(videoUrl).openStream(), "mp4");
-        } catch (IOException e) {
-            System.out.println("Failed to attach video: " + e.getMessage());
+            return new URL(videoUrl);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }
